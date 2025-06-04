@@ -32,18 +32,18 @@ warnings.filterwarnings('ignore')
 
 
 # Important Global Constants
-c = 2.998*10**8         # Lichtgeschindigkeit in m/s
-h = 6.626*10**-34       # Plancks Konstante in Js
-k = 1.381*10**-23       # Boltzmankonstante in J/K
+c = 2.998*10**8         # Speed of light in m/s
+h = 6.626*10**-34       # Planck's constant in Js
+k = 1.381*10**-23       # Boltzman constant in J/K
 sigma = 5.67 *10**-8    # Stefan-Boltzmann in W/ m^2 K^4
-solar = 1370            # Solarkonstante in W/m^2
-au = 150*10**11         # Astronomische Einheit in m
-r_earth = 6356.0        # Erdradius in km
-kw = 2897.0             # Wien's Komstante in nm K
+solar = 1370            # Solar constant in W/m^2
+au = 150*10**11         # Astronomical unit in m
+r_earth = 6356.0        # earth radius in km
+kw = 2897.0             # Wien's constant in nm K
 n_a = 6.022*1e23        # Avogadro Number mole^-1
 
 
-# Frequenz von bestimmten Messgeräten
+# Frequenzy
 freq_ku_band = 13.6  #GHz, 1e9 in Hz DPR GPM Ku-band
 freq_ka_band = 35.5  #GHz, 1e9 in Hz DPR GPM Ka-band
 freq_x_band = 9.3    #GHz, 1e9 in Hz BoXPol/JuXPol Uni Bonn
@@ -52,14 +52,13 @@ freq_k_band = 24.1   #GHz, 1e9 in Hz # MRR in Bonn
 freq_s_band = 3.     #GHz, 1e9 in Hz # Kein Bestimmtes S-band
 
 
-# Wichtige Funktionen der Atmosphärischen Strahlung
 def BeerBougetLambert(F, beta, s):
     """
     Function:
-         bouguer-lambert-beersche Gesetz beschreibt die Abschwaechung der
-         Intensitaet einer Strahlung bei dem Durchgang durch ein Medium
-         mit einer absorbierenden Substanz, in Abhaengigkeit von der
-         Konzentration der absorbierenden Substanz und der Schichtdicke
+        Bouguer-Lambert-Beer's law describes the attenuation of the
+        intensity of a radiation when passing through a medium
+        with an absorbent substance, depending on the
+        concentration of the absorbent substance and the layer thickness
     Input:
         F       ::: radiation flux density in W/m2 befor absorption
         beta    ::: volumen absorption coeff.
@@ -74,7 +73,7 @@ def BeerBougetLambert(F, beta, s):
 def beta(ni, lam):
     """
     Function:
-         Berechnung des volumen absorptions coeff
+         Calculation of the volume absorption coefficient
     Input:
         ni    ::: refractive Index
         lam   ::: wellenlaenge
@@ -87,11 +86,11 @@ def beta(ni, lam):
 def micro2m(wav):
     """
     Function:
-        Umrechnung von mikrometer in meter.
+        Conversion from micrometre to metre.
     Input:
-        wav Wellenlaenge in mikrometer
+        wav wave length in micrometres
     Output:
-        Wellenleange in meter
+        Wave length in meter
     """
     wav_neu = wav*10**-6
     return wav_neu
@@ -99,25 +98,25 @@ def micro2m(wav):
 def m2micro(wav):
     """
     Function:
-        Umrechnung von meter in mikrometer.
+        Conversion from metre to micrometre.
     Input:
-        wav Wellenlaenge in meter
+        wav wave length in meter
     Output:
-        Wellenleange in mikrometer
+        wave length in micrometer
     """
     wav_neu = wav*10**6
     return wav_neu
 
 def freq2wav(freq):
     """
-    Funktion: 
-        Frequenz in Wellenlaenge umwandeln
+    Function: 
+        Convert frequency to wavelength
         
     Input:
-        Frequenz in pro sekunde bzw Herz [Hz] angeben
+        Frequenz in per sec/ Herz [Hz] 
         
     Output:
-        Welenlaenge in Metern [m]
+        wave length in meter [m]
     """
     wave = c / freq
     return wave
@@ -125,12 +124,12 @@ def freq2wav(freq):
 def wav2freq(wav):
     """
     Funktion: 
-        Wellenlaenge in Frequenz umwandeln
+        convert wave length in frequency
         
     Input:
-        Wellenlaenge in Metern
+        wave length in m
     Output:
-        Frequenz in pro sekunde in Herz [Hz]
+        frequency in per sec/in Herz [Hz]
     """
     frequenc = c / wav
     return frequenc
@@ -138,11 +137,11 @@ def wav2freq(wav):
 def K2C(Kelvin):
     """
     Funktion:
-        Umrechnung von Kelvin zu Celsius
+        Converting Kelvin zu Celsius
     Input:
-        Temperatur in Kelvin [K]
+        Temperature in Kelvin [K]
     Output:
-        Temperatur in Celsius [C]
+        Temperature in Celsius [C]
     """
     C = Kelvin - 273.15
     return C
@@ -150,7 +149,7 @@ def K2C(Kelvin):
 def C2K(C):
     """
     Funktion:
-        Umrechnung von Celsius in Kelvin
+        Converting Celsius in Kelvin
     Input:
         Temperatur in Celsius [C]
     Output:
@@ -161,15 +160,15 @@ def C2K(C):
 
 def planck(wav, T):
     """
-    Diese Funktion berechnet die Strahlung nach Panlk mit Abhänngigkeit von
-    Temperatur und Wellenlänge eines Schwarzen Körpers GP (6.1)
+    This function calculates the radiation according to Panlk with dependence on
+    temperature and wavelength of a black body GP (6.1)
         
     Input:
-        wav : Wellenlänge in [µm]
-        T : Temperatur in [K]
+        wav : Wave length in [µm]
+        T : Temperature in [K]
         
     Output:
-        B = Strahlung in [W/(m^2 sr µm)]
+        B = Radiation in [W/(m^2 sr µm)]
     """
     a1 = (2.0*h*c**2)/(wav**5)
     b1 = (h*c)/(k*T*wav)
@@ -178,13 +177,13 @@ def planck(wav, T):
 
 def emission(intens, emiss):
     """
-    Monochromatische Emission eines grauen Körpers
+    Monochromatic emission of a grey body
         
     Input:
-        intens : Strahldichte in [W/m^2]
-        emiss : Emissionsgrad in [/]
+        intens : Intensyti in [W/m^2]
+        emiss : emission degree in [/]
     Output:
-        Intens_neu : Ausgestrahlte Strahldichte in [W/m^2 sr]
+        Intens_neu : Radiated radiance in [W/m^2 sr]
         
     """
     Intens_neu = emiss*intens
@@ -192,14 +191,15 @@ def emission(intens, emiss):
 
 def intens2Tb(wav,intens):   
     """
-    Berechnung der Strahlungstemperatur aus der Plank Funktion.
+
+    Calculation of the radiation temperature from the Plank function.
     GP (6.13)
         
     Input:
-        wav : Wellenlänge in [µm]
-        intens : Strahldichte in [W/m^2 sr]
+        wav : wavelength in [µm]
+        intens : Intensity in [W/m^2 sr]
     Output:
-        Tb : Strahlungstemperatur in [K]
+        Tb : Radiation temperature in [K]
     """
     a1 = (2.0 * h * c**2) / (intens * wav**5)
     b1 = (h * c) / (k * wav)
@@ -208,14 +208,14 @@ def intens2Tb(wav,intens):
 
 def stefan_boltzmann(T):
     """
-    Stefan-Boltzman_Gesetz Berechnet den Strahlungsflussdichte integriert über
-    alle Wellenlängen in abhänngigkeit von der Temperatur T. GP (6.5)
+    Stefan-Boltzman_Law Calculates the radiant flux density integrated over
+    all wavelengths as a function of the temperature T. GP (6.5)
         
     Input:
-        T : Temperatur in [K]
+        T : Temperature in [K]
 
     Output:
-        Strahlungsflussdichte in [W/m^2]
+        Radiation Flux in [W/m^2]
         
     """
     Fbb = sigma * T**4.
@@ -223,17 +223,17 @@ def stefan_boltzmann(T):
 
 def srtm(asw, alw, A, eps=None):
     """
-    Simpel Radiative Models of Atmosphere zur Berechnung von Atmosphären und
-    Oberflächen Temperaturen unter verschiedenen Emissionsgraden. GP S. 140-143
+    Simpel Radiative Models of Atmosphere for the calculation of atmospheres and
+    surface temperatures under different emissivities. GP P. 140-143
         
     Input:
         A : Albedo in [/]
-        asw : Absorption kurzwellig in [/]
-        alw : Absorbtion langwellig in [/]
+        asw : Absorption short wave in [/]
+        alw : Absorbtion long wave in [/]
         
     Output:
-        Tatmo : Atmosphärentemperatur in [/]
-        Tsurf : Oberflächentemperatur in [/]
+        Tatmo : atmo. temperature in [/]
+        Tsurf : surface temperature in [/]
 
     """
     if eps == None:
@@ -264,10 +264,10 @@ def rainbow_min_def_ang(m, k):
     Returns
 
     Input:
-        m : Brechungsindex in [/]
-        k : Anzahl der Brechungen
+        m : index of refrection in [/]
+        k : number if reflections
     Output:
-        res : Minimaler Winkel der Deflection
+        res : min. Angle der Deflection
     """
     res = np.sqrt((m**2)/(k**2 +2*k))
     res = np.rad2deg(np.arccos(res))
@@ -277,16 +277,16 @@ def rainbow_min_def_ang(m, k):
 
 def optt_cloud(N,H=100, L=0.01, roh=1000, Q=2):
     """
-    Funktion zur Berechnung der optischen Dicke einer Wolke
+    Function for calculating the optical thickness of a cloud
     
     Input: 
-        H : Hohe der Wolke in [m]
-        N : Anzahl der Tropfen in [1/m^3]
-        L : Flüssigwassergehalt in [kg/m^2]
-        rho : Dichte in [kg/m^3]
+        H : Height of the cloud in [m]
+        N : Number of drops in [1/m^3]
+        L : Liquid water content in [kg/m^2]
+        rho : density in [kg/m^3]
     
     Output: 
-        tau : optische Dicke in [/]
+        tau : opt. thickness in [/]
     
     """
     ne = 9. * H * np.pi * N * (L**2)  
@@ -297,12 +297,13 @@ def optt_cloud(N,H=100, L=0.01, roh=1000, Q=2):
 
 def transmission(tau, theta):
     """
-    Diese Funktion berechnet die Transmission bei gegebener optischen Tiefe
-    und Zenitwinkel
+    
+    This function calculates the transmission for a given optical depth
+    and zenith angle
     
     Input:
-        tau : optische Dicke in [/]
-        theta : zenitwinkel in [°]
+        tau : opt thikness in [/]
+        theta : zenith angle in [°]
         
     Output:
         transmission in [/]
@@ -315,15 +316,15 @@ def transmission(tau, theta):
     
 def swimmingpool(lam, ni, x):
     """
-    Funktion zur Berechnung der Transmission im Wasser bei gegebener
-    Wellenlaenge und imaginaeren Brechungsindex.
+    Function for calculating the transmission in water given
+    wave length and imaginary refractive index.
     
     Input:
-        lam : Waellenlaenge in mikrometer
-        ni : imaginaerteil Brechungsindex dimensionslos
+        lam : wave length in micrometer
+        ni : imaginaerteil Refractive index dimensionless
         x : Abstand in mikrometern
     Output:
-        t : Transmission dimensionslos
+        t : Distance in micrometres
     """
     ne = -1 * (4 * np.pi * ni * x) 
     ze = lam
@@ -334,18 +335,17 @@ def swimmingpool(lam, ni, x):
 
 def Tb_sat(lam, intens):
     """
-    Diese Funktion berechnet aus gegebener Wellenlaenge und
-    Strahlungsintensitaet die Strahlungstemperatur über die invetierte
-    Planck Funktion.
+    This function calculates the radiation temperature from a given wave length and
+     radiation intensity using the inverse
+     Planck function.
     
     Input:
-        I : Intensitaet in [W m^-2 µm^-1 sr^-1 ]
-            (mal 10e6 um die Micrometer verrechnen zu können)
-        lam : Wellenlaenge in [µm]
-            (Wellenlaenge in Micrometer)
+        I : Intensity in [W m^-2 µm^-1 sr^-1 ]
+            (time 10e6 for including micrometer)
+        lam : wave length in [µm]
         
     Output:
-        tb : Strahlungstemperatur 
+        tb :Radiation temperature  
     
     """
     
@@ -359,25 +359,26 @@ def Tb_sat(lam, intens):
 
 def size_para(rr,ww):
     """
-    Diese Funktion berechnet den Size Parameter in Abhaengigkeit von
-    Partikelradius zu Wellenlaenge. GP (12.1)
+    This function calculates the size parameter as a function of
+    particle radius to shaft length. GP (12.1)
     
     Input: 
-        rr : Partikelradius in Micrometer [µm]
-        ww : Wellenlaenge in Micrometer [µn]
+        rr : Particle radius in micrometres [µm]
+        ww : wave length in micrometer [µn]
     Output:
-        chi : Size Parameter ohne Dimension [/]
+        chi : Size Parameter [/]
     """
     chi = (2. * np.pi * rr) / ww
     return chi
 
 def ray_efficiencies(m,chi):
     """
-    Diese Funktion berechnet aus dem Brechungsindex und dem Size Parameter die
-    Efficiensies mit der Rayleigh Theorie. (GP 12.12 - 12.14)
+    This function calculates the
+     efficiencies from the refractive index and the 
+     size parameter using Rayleigh theory. (GP 12.12 - 12.14)
 
     Input:
-        m : Brechungsindex in [/]
+        m : Index of refrection in [/]
         chi : Size Parameter in [/]
         
     Output:
@@ -395,8 +396,9 @@ def ray_efficiencies(m,chi):
 
 def efficiencies(m,chi):
     """
-    Diese Funktion berechnet aus dem Brechungsindex und dem Size Parameter die
-    Efficiensies mit der Mie Theorie.
+     This function calculates the
+     efficiencies with the Mie theory
+     from the refractive index and the size parameter.
 
 
     Input:
@@ -445,14 +447,14 @@ def efficiencies(m,chi):
 
 def ray_phase_func(theta):
     """
-    Diese Funktion berechnet aus dem Streuwinkel die Pahsenfunktion nach
-    der Rayleigh Theorie. GP (12.10)
+   This function calculates the Pahsen function from the scattering angle according to
+   of the Rayleigh theory. GP (12.10)
 
     Input:
-        theta : Streuwinkel in [°]
+        theta : scattering angle in [°]
 
     Output:
-        p : Rayleigh Phasen Funktion in [/]
+        p : Rayleigh Phasen Function in [/]
     """
     p = (3./4.) *(1.+np.cos(np.deg2rad(theta))**2)
     return p
@@ -461,14 +463,14 @@ def ray_phase_func(theta):
 
 def phase_func(m,chi,mu, nang):
     """
-    Diese Funktion berechnet aus dem Streuwinkel die Pahsenfunktion nach
-    der Mie Theorie. ()
+     This function calculates the Pahsen function from the scattering angle according to
+     of the Mie theory. (BC)
 
     Input:
-        m : Brechungsindex in [/]
-        chi : Size Parameter in [/]
-        mu : Cosinus des Streuwinkels in [/]
-        nang : Länge des Streuwinkelvektors in [/]
+        m : Index of refraction in [/]
+        chi : Size parameter in [/]
+        mu : Cosinus scattering angle in [/]
+        nang : Length Streuwinkelvektors in [/]
 
     Output:
         p : Mie Phasen Funktion in [/]
@@ -511,16 +513,16 @@ def phase_func(m,chi,mu, nang):
 
 def weg(a,rando):
     """
-    Diese Funktion berechnet aus dem Volumenextinktionskoeffizienten und einer
-    Zufallszahl die Weglänge die ein Photon in einem Medium passiert.
+    This function uses the volume extinction coefficient and a
+    random number to calculate the path length travelled by a photon in a medium.
     
 
     Input:
         a : Volumenextinktionskoeffizient in [1/m]
-        rando : Zufallszahl in [/]
+        rando : random number in [/]
         
     Output:
-        l : Weglänge in [m]
+        l : wave length in [m]
         
     """    
     l = -1. * np.log(1-rando) / a # 
@@ -529,15 +531,15 @@ def weg(a,rando):
 
 def Theta_HG(random,g):
     """
-    Diese Funktion brechnet den zufälligen Streuwinkel nach Henyey Greenstein
-    unter Angabe des Asymetrieparameters und einer Zufallszahl. (GP 11.23)
+    This function calculates the random scattering angle according to Henyey Greenstein
+    by specifying the asymmetry parameter and a random number. (GP 11.23)
         
     Input:
-        random : Zufallszahl in [/]
-        g : Asymetrieparameter in [/]
+        random : random nummber in [/]
+        g : asymetrieparameter in [/]
 
     Output:
-        Theta : Streuwinkel in [rad]
+        Theta : Scattering angle in [rad]
         
     """    
     if g==0:
@@ -554,12 +556,12 @@ def Theta_HG(random,g):
 
 def rotmat(theta_old,phi_old):
     """
-    Diese Funktion berechnet die Rotationmatrix der Richtung aus dem
-    Einheitssystem in das Absolutsystem. ()
+   This function calculates the rotation matrix of the direction from the
+   unit system into the absolute system. (BC)
 
     Input:
-        theta_old : vorheriger Elevationswinkel
-        phi_old : vorheriger Azimuthwinkel
+        theta_old : previous elevation angle
+        phi_old : previous azimuth angle
         
     Output:
         3x3 Rotationsmatrix
@@ -579,18 +581,18 @@ def rotmat(theta_old,phi_old):
     
 
 
-def H_von_OptDic(beta_e, opt_dic):
+def H_from_OptDic(beta_e, opt_dic):
     """
-    Berechnung der Höhe bei gegebener optischen Dicke und einem
-    Volumenextinktionskoeffizient.
+    Calculation of the height for a given optical thickness and a
+    volume extinction coefficient.
     GP (7.32)
         
     Input:
-        beta_e : Volumenextinktionskoeffizient in [1/m]
-        opt_dic: optische Dicke in [/]
+        beta_e : Volumenextinktionscoeffizient in [1/m]
+        opt_dic: opt. thickness in [/]
         
     Output:
-        H : Höhe der Schicht in [m]
+        H : Layerthickness in [m]
         
     """    
 
@@ -602,11 +604,11 @@ def H_von_OptDic(beta_e, opt_dic):
 
 def gamma(omega_bar, g):
     """
-    Berechnung von Gamma als Zwischenergebnis der Zweistromapproximation
+    Calculation of gamma as an intermediate result of the two-stream approximation
     GP (13.25)
 
     Input:
-        omega_bar : Einfachstreualbedo in [/]
+        omega_bar : single scattering albedo in [/]
         g: Aysmetrieparameter in [/]
 
     Output:
@@ -618,12 +620,12 @@ def gamma(omega_bar, g):
 
 def r_inf(omega_bar, g):
     """
-    Berechnung der Albedo am Oberand der Wolke und uter der Annahme der
-    Zweistromapproximation bei einer semi-unendlichen Wolke.
+    Calculation of the albedo at the upper edge of the cloud and under the assumption of the
+    two-stream approximation for a semi-infinite cloud.
     GP (13.44)
 
     Input:
-        omega_bar : Einfachstreualbedo in [/]
+        omega_bar : Single scattering albedo in [/]
         g: Aysmetrieparameter in [/]
 
     Output:
@@ -637,14 +639,14 @@ def r_inf(omega_bar, g):
 
 def tsa_r(g,tau_stern, omega_bar):
     """
-    Berechnung der Reflexion am Oberand der Wolke und unter der Annahme der
-    Zweistromapproximation .
-    GP (13.65)
+    Calculation of the reflection at the upper edge of the cloud and under the assumption of the
+     two-stream approximation .
+    GP (13.65))
 
     Input:
-        omega_bar : Einfachstreualbedo in [/]
+        omega_bar : Single scattering albedo in [/]
         g: Aysmetrieparameter in [/]
-        tau_stern : optische Dicke in [/]
+        tau_stern : opt thickness in [/]
 
     Output:
         r : Reflexion in [/]
@@ -665,17 +667,17 @@ def tsa_r(g,tau_stern, omega_bar):
 
 def tsa_t(g,tau_stern, omega_bar):
     """
-    Berechnung der Transmission am Oberand der Wolke und unter der Annahme der
-    Zweistromapproximation .
+    Calculation of the transmission at the upper edge of the cloud and under the assumption of the
+    two-stream approximation .
     GP (13.66)
 
     Input:
-        omega_bar : Einfachstreualbedo in [/]
+        omega_bar : Single scattering albedo in [/]
         g: Aysmetrieparameter in [/]
-        tau_stern : optische Dicke in [/]
+        tau_stern : opt. thickness in [/]
 
     Output:
-        t : Reflexion in [/]
+        t : Transmission in [/]
 
     """
     if omega_bar == 1:
@@ -692,14 +694,14 @@ def tsa_t(g,tau_stern, omega_bar):
 
 def tsa_tdiff(g,tau_stern, omega_bar):
     """
-    Berechnung der direkten und diffusen Transmission einer Wolke unter der
-    Annahme der Zweistromapproximation .
+    Calculation of the direct and diffuse transmission of a cloud under the
+    assumption of the two-stream approximation .
     GP (13.69)
 
     Input:
-        omega_bar : Einfachstreualbedo in [/]
+        omega_bar : Single scattering albedo in [/]
         g: Aysmetrieparameter in [/]
-        tau_stern : optische Dicke in [/]
+        tau_stern : opt. tchikness in [/]
 
     Output:
         tdiff : Diffuse transmission in [/]
@@ -726,7 +728,7 @@ def MCM(H=1000., photons=200,  beta=0.005, ssalbedo=0.95, g=0.85, theta=0.78, ph
     
     # Input:
     # -------
-      H : Height of the cloud in m
+      H : Height/thikness of the cloud layer in m
       photons: number of photons
       beta : volumen extinction coef. in 1/m
       ssalbedo : single scattering albedo [0-1]
@@ -751,7 +753,6 @@ def MCM(H=1000., photons=200,  beta=0.005, ssalbedo=0.95, g=0.85, theta=0.78, ph
         Path of the photon
         """
         l = -1. * np.log(1-rando) / a # 
-        #l=-np.log10(1-np.random.normal(0,0.2,1))*a
         return l
 
     ## Asymetry Parameter
@@ -786,10 +787,10 @@ def MCM(H=1000., photons=200,  beta=0.005, ssalbedo=0.95, g=0.85, theta=0.78, ph
     
 
     
-    # Start für X Y Z 
+    # Start X Y Z 
     x, y, z= 0, 0, H
 
-    # Seed für Zufallszahlengenerator
+    # Seed 
     rs = np.random.RandomState(rnd)
 
 
@@ -803,69 +804,61 @@ def MCM(H=1000., photons=200,  beta=0.005, ssalbedo=0.95, g=0.85, theta=0.78, ph
 
     for jj in range(photons):
 
-        # Theta Sonne
+        # Theta sun
         d = theta 
-        # Phi Sonne
+        # Phi sun
         dp = phi
 
         position = np.zeros([sim+1,3]) 
         position[:] = np.NAN
         position[0,0], position[0,1], position[0,2] = x, y, z
-        #print(np.rad2deg(d), np.rad2deg(dp))
 
         i = 0
 
         while i < sim:
 
-            #EinPhoton dringt in die Wolke ein ...was passiert?
+            # start photon cloud top
             l = weg(beta, rs.rand(1))#*H
             
-            # Neue Position Local
+            # New Positional Local
             position[i+1,0] = position[i,0]+np.sin(d)*np.cos(dp)*l # X-position
             position[i+1,1] = position[i,1]+np.sin(d)*np.sin(dp)*l # Y-Position
             position[i+1,2] = position[i,2]-np.cos(d)*l # Z-Position
             
-            # Absorbtion, Transmission, Reflexion oder Streuung?!
+            # Absorbtion, Transmission, Reflexion or Scattering
             if (position[i+1,2]<=0):
                 tran = tran + 1
-                break ### Schleife stoppen wenn photon am Boden ankommt 
-                #pass
+                break ### stop if photon at cloud base
 
             elif (position[i+1,2]>H):
                 refl = refl + 1
-                break ### Schleife Stoppen wenn photon wolkenoberkante überschreitet
-                #pass
+                break ### stop if photon at cloud top
 
             # Absorbtion mit Wahrscheinlichkeit 1-ssalbedo
-            elif (np.random.uniform(0,1,1) > ssalbedo): ### Schleife stoppen wenn photon absorbiert wird
+            elif (np.random.uniform(0,1,1) > ssalbedo): ### stop if photon abs
                 abso = abso +1
                 break
-                #pass
 
             else:
-                # Rotations Matrix mit ALTEN THETA und PHI bestimmen
+                # Rotations Matrix with old THETA und PHI 
                 M = rotmat(theta,phi)
 
-                # Scatterevent Im Einheitssystem (Im Labor):
-                # NEUEN THETA und PHI werden berechnet 
+                # Scatterevent unit system
+                # NEW THETA und PHI 
                 d = Theta_HG(rs.rand(1),g)
                 dp = np.random.uniform(0,1,1) * np.pi*2
                 #dp = rs.rand(1)* np.pi*2
                                 
-                # Neue Richtung mit NEUEN THETA und PHI (Im Labor)
+                # New Direction with NEW THETA and PHI
                 xd_neu = np.sin(d)*np.cos(dp) # X-position
                 yd_neu = np.sin(d)*np.sin(dp) # Y-Position
                 zd_neu = np.cos(d) # Z-Position
                 
-                # Rotation der Streuung im Labor mit alten THETA und PHI ins Referenzsystem
-                # Rihtung im Referenzsystem = Rotation von Streuevent im Labor
+                # Rotation of scattering in the unit system with old THETA and PHI in the reference system
+                # Rotation in the reference system = rotation of scattering event in the laboratory
                 new_d = np.dot(M,np.array([xd_neu, yd_neu, zd_neu]))
 
-                # Merken der neuen Richtung im Referenzsystem
-                # Berechnung von THETA und PHI aus Richtung
-                #d = m.acos(new_d[2])
-                #dp = m.atan2(new_d[0],new_d[1])
-            
+                # Calc THETA and PHI from direction
                 d = np.arccos(new_d[2])
                 dp = np.arctan2(new_d[1],new_d[0])
             
