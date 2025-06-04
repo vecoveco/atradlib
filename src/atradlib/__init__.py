@@ -2,6 +2,6 @@
 
 __author__ = """Velibor Pejcic"""
 __email__ = 'velibor@uni-bonn.de'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 from .atradlib import BeerBougetLambert
