@@ -47,9 +47,9 @@ n_a = 6.022*1e23        # Avogadro Number mole^-1
 freq_ku_band = 13.6  #GHz, 1e9 in Hz DPR GPM Ku-band
 freq_ka_band = 35.5  #GHz, 1e9 in Hz DPR GPM Ka-band
 freq_x_band = 9.3    #GHz, 1e9 in Hz BoXPol/JuXPol Uni Bonn
-freq_c_band = 5.6    #GHz, 1e9 in Hz DWD Regenradar
+freq_c_band = 5.6    #GHz, 1e9 in Hz DWD C-band Radars
 freq_k_band = 24.1   #GHz, 1e9 in Hz # MRR in Bonn
-freq_s_band = 3.     #GHz, 1e9 in Hz # Kein Bestimmtes S-band
+freq_s_band = 3.     #GHz, 1e9 in Hz # US S-band
 
 
 def BeerBougetLambert(F, beta, s):
